@@ -8,6 +8,7 @@ local RunObjectivesMod = RegisterMod("Run Objectives", 1)
 
 -- Include modules.
 local Objective = include("scripts.objective")
+local ObjectivesRenderer = include("scripts.objectives_renderer")
 
 -- Fields
 local registeredObjectives = { }
@@ -20,16 +21,19 @@ function RunObjectivesMod:RegisterObjective(objective)
     table.insert(registeredObjectives, objective)
 end
 
+-- MC_POST_UPDATE --
 function RunObjectivesMod:OnUpdate()
     for i, objective in ipairs(registeredObjectives) do
         if objective.isCompleted == false and objective:Evaluate() == true then
             objective:OnCompleted()
             objective.isCompleted = true
+            ObjectivesRenderer:AddObjectiveToRender(objective)
         end
     end
 end
 
 RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_UPDATE, RunObjectivesMod.OnUpdate)
+RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_RENDER, ObjectivesRenderer.OnRender)
 
 -- API --
 function RunObjectivesMod:AddObjectiveCallback(objective, isCompleted, modCallbacks, functionCallback, ...)
@@ -46,10 +50,6 @@ RunObjectivesAPI.RegisterObjective = RunObjectivesMod.RegisterObjective
 RunObjectivesAPI.AddObjectiveCallback = RunObjectivesMod.AddObjectiveCallback
 -- API --
 
-
-
-
-
 -- TEST
 local TestObjective = { }
 
@@ -62,4 +62,4 @@ end
 
 RunObjectivesMod:RegisterObjective(Objective:new(TestObjective))
 
-include("scripts.Objectives.reroll_quality_four")
+include("scripts.Objectives.quality_four_reroller")

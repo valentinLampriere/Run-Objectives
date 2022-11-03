@@ -1,6 +1,8 @@
 local Objective = {
     name = "",
-    isCompleted = false
+    isCompleted = false,
+    gfx = "gfx/objectivesIcons/qualityFourReroller.png",
+    sprite = nil
 }
 
 function Objective:new(o, name)
@@ -11,9 +13,11 @@ function Objective:new(o, name)
     o.name = name or "[Unamed Objective]"
     o.isCompleted = false
 
-    if o.Evaluate == nil then
-        --error("Objective \"".. o.name .."\" requires an \"Evaluate\" function!")
-    end
+    local sprite = Sprite()
+	sprite:Load("gfx/objectiveIcon.anm2", true)
+    sprite:Play(sprite:GetDefaultAnimation(), true)
+    sprite:ReplaceSpritesheet(0, o.gfx)
+    o.sprite = sprite
 
     return o
 end
