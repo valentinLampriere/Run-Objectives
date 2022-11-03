@@ -13,6 +13,10 @@ local Objective = include("scripts.objective")
 local registeredObjectives = { }
 
 function RunObjectivesMod:RegisterObjective(objective)
+    if objective.Evaluate == nil then
+        error("Objective \"".. objective.name .."\" requires an \"Evaluate\" function!")
+    end
+
     table.insert(registeredObjectives, objective)
 end
 
@@ -27,12 +31,20 @@ end
 
 RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_UPDATE, RunObjectivesMod.OnUpdate)
 
+-- API --
+function RunObjectivesMod:AddObjectiveCallback(objective, isCompleted, modCallbacks, functionCallback, ...)
+    RunObjectivesMod:AddCallback(modCallbacks, function (...)
+        if objective.isCompleted == isCompleted then
+            return functionCallback(...)
+        end
+    end, ...)
+end
 
--- API
 RunObjectivesAPI = { }
 RunObjectivesAPI.Objective = Objective
 RunObjectivesAPI.RegisterObjective = RunObjectivesMod.RegisterObjective
-
+RunObjectivesAPI.AddObjectiveCallback = RunObjectivesMod.AddObjectiveCallback
+-- API --
 
 
 

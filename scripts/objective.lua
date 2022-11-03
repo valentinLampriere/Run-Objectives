@@ -8,14 +8,14 @@ function Objective:new(o, name)
     setmetatable(o, self)
     self.__index = self
 
-    self.name = name or "???"
-    self.isCompleted = false
+    o.name = name or "[Unamed Objective]"
+    o.isCompleted = false
+
+    if o.Evaluate == nil then
+        --error("Objective \"".. o.name .."\" requires an \"Evaluate\" function!")
+    end
 
     return o
-end
-
-function Objective:Evaluate()
-    return false
 end
 
 function Objective:OnCompleted()
