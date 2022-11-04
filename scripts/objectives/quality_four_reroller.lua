@@ -10,6 +10,11 @@ function RerollQualityFourObjective:Evaluate()
     return hasRerolledQuality4
 end
 
+function RerollQualityFourObjective:OnNewRun(isCompleted)
+    hasRerolledQuality4 = false
+    d6frameUsed = 0
+end
+
 RunObjectivesAPI:RegisterObjective(quality4RerollerObjective)
 
 

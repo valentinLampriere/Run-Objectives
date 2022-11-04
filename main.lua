@@ -9,6 +9,8 @@ local RunObjectivesMod = RegisterMod("Run Objectives", 1)
 -- Include modules.
 local Objective = include("scripts.objective")
 local ObjectivesRenderer = include("scripts.objectives_renderer")
+local ObjectiveCompletedRenderer = include("scripts.objective_completed_renderer")
+
 
 -- Fields
 local registeredObjectives = { }
@@ -28,12 +30,24 @@ function RunObjectivesMod:OnUpdate()
             objective:OnCompleted()
             objective.isCompleted = true
             ObjectivesRenderer:AddObjectiveToRender(objective)
+            ObjectiveCompletedRenderer:RequestRenderNewCompletedObjective(objective)
         end
     end
 end
 
+-- MC_POST_GAME_STARTED --
+function RunObjectivesMod:OnGameStart(isContinued)
+    for i, registeredObjective in ipairs(registeredObjectives) do
+        registeredObjective.isCompleted = false
+        registeredObjective:OnNewRun(isContinued)
+    end
+    ObjectivesRenderer:ClearObjectiveToRender()
+end
+
 RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_UPDATE, RunObjectivesMod.OnUpdate)
+RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, RunObjectivesMod.OnGameStart)
 RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_RENDER, ObjectivesRenderer.OnRender)
+RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_RENDER, ObjectiveCompletedRenderer.OnRender)
 
 -- API --
 function RunObjectivesMod:AddObjectiveCallback(objective, isCompleted, modCallbacks, functionCallback, ...)

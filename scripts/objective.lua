@@ -26,4 +26,7 @@ function Objective:OnCompleted()
     print(self.name .." completed :)")
 end
 
+function Objective:OnNewRun(isContinued)
+end
+
 return Objective
