@@ -47,7 +47,6 @@ end
 RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_UPDATE, RunObjectivesMod.OnUpdate)
 RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, RunObjectivesMod.OnGameStart)
 RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_RENDER, ObjectivesRenderer.OnRender)
-RunObjectivesMod:AddCallback(ModCallbacks.MC_POST_RENDER, ObjectiveCompletedRenderer.OnRender)
 
 -- API --
 function RunObjectivesMod:AddObjectiveCallback(objective, isCompleted, modCallbacks, functionCallback, ...)
@@ -68,7 +67,7 @@ RunObjectivesAPI.AddObjectiveCallback = RunObjectivesMod.AddObjectiveCallback
 local TestObjective = { }
 
 function TestObjective:Evaluate()
-    return Game():GetFrameCount() > 60
+    return Game():GetFrameCount() > 100
 end
 function TestObjective:OnCompleted()
     Isaac.Spawn(5,100,4, Vector(320, 280), Vector.Zero, nil)
