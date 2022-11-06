@@ -82,7 +82,7 @@ local function TryGetBetterItem(poolType, seed, collectible)
     return collectible
 end
 
-function RerollQualityFourObjective:TryGetBetterItemOnPickupSelection(pickup, variant, subtype)
+function RerollQualityFourObjective:OnPickupSelection(pickup, variant, subtype)
     if variant ~= PickupVariant.PICKUP_COLLECTIBLE or d6frameUsed ~= game:GetFrameCount() then
         return
     end
@@ -103,4 +103,4 @@ end
 RunObjectivesAPI:AddObjectiveCallback(quality4RerollerObjective, false, ModCallbacks.MC_PRE_USE_ITEM, RerollQualityFourObjective.PreUseD6_uncomplete, CollectibleType.COLLECTIBLE_D6)
 RunObjectivesAPI:AddObjectiveCallback(quality4RerollerObjective, true, ModCallbacks.MC_PRE_USE_ITEM, RerollQualityFourObjective.PreUseD6_complete, CollectibleType.COLLECTIBLE_D6)
 -- MC_POST_PICKUP_SELECTION --
-RunObjectivesAPI:AddObjectiveCallback(quality4RerollerObjective, true, ModCallbacks.MC_POST_PICKUP_SELECTION, RerollQualityFourObjective.TryGetBetterItemOnPickupSelection)
+RunObjectivesAPI:AddObjectiveCallback(quality4RerollerObjective, true, ModCallbacks.MC_POST_PICKUP_SELECTION, RerollQualityFourObjective.OnPickupSelection)

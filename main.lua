@@ -15,6 +15,7 @@ local ObjectiveCompletedRenderer = include("scripts.objective_completed_renderer
 -- Fields
 local registeredObjectives = { }
 
+-- Functions
 function RunObjectivesMod:RegisterObjective(objective)
     if objective.Evaluate == nil then
         error("Objective \"".. objective.name .."\" requires an \"Evaluate\" function!")
@@ -63,16 +64,5 @@ RunObjectivesAPI.RegisterObjective = RunObjectivesMod.RegisterObjective
 RunObjectivesAPI.AddObjectiveCallback = RunObjectivesMod.AddObjectiveCallback
 -- API --
 
--- TEST
-local TestObjective = { }
-
-function TestObjective:Evaluate()
-    return Game():GetFrameCount() > 100
-end
-function TestObjective:OnCompleted()
-    Isaac.Spawn(5,100,4, Vector(320, 280), Vector.Zero, nil)
-end
-
-RunObjectivesMod:RegisterObjective(Objective:new(TestObjective))
-
 include("scripts.Objectives.quality_four_reroller")
+include("scripts.Objectives.gets_three_knives")
