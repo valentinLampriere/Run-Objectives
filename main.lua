@@ -66,3 +66,4 @@ RunObjectivesAPI.AddObjectiveCallback = RunObjectivesMod.AddObjectiveCallback
 
 include("scripts.Objectives.quality_four_reroller")
 include("scripts.Objectives.gets_three_knives")
+include("scripts.Objectives.angels_deceiver")

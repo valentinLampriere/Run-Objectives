@@ -23,7 +23,6 @@ function Objective:new(o, name)
 end
 
 function Objective:OnCompleted()
-    print(self.name .." completed :)")
 end
 
 function Objective:OnNewRun(isContinued)
