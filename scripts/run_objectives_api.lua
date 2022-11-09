@@ -1,7 +1,9 @@
 local RunObjectivesAPI = { }
 
-function RunObjectivesAPI:RegisterObjective(condition)
+RunObjectivesAPI.modCallbacksOffset = 1 << 7
 
-end
+RunObjectivesAPI.ModCallbacks = {
+    MACHINE_UPDATE = 1 + RunObjectivesAPI.modCallbacksOffset
+}
 
 return RunObjectivesAPI

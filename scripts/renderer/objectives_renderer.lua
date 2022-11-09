@@ -1,4 +1,4 @@
-local RenderHelper = include("scripts.render_helper")
+local RenderHelper = include("scripts.renderer.render_helper")
 
 local ObjectivesRenderer = { }
 
