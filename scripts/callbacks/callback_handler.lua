@@ -4,13 +4,14 @@ local CallbackHandler = {
     RegisteredCallbacks = { }
 }
 
-function CallbackHandler:new(o, id, defaultArgument)
+function CallbackHandler:new(o, id, ...)
+	local args = {...}
     o = o or { }
     setmetatable(o, self)
     self.__index = self
 
     o.ID = id
-    o.DefaultArgument = defaultArgument or { }
+    o.DefaultArgument = args or { }
     o.RegisteredCallbacks = o.RegisteredCallbacks or { }
 
     return o
@@ -18,6 +19,8 @@ end
 
 function CallbackHandler:AddCallback(_function, ...)
     local args = {...}
+
+	print(_function)
 
 	if _function == nil then
 		return

@@ -66,7 +66,7 @@ function RunObjectivesMod:AddObjectiveCallback(objective, isCompleted, modCallba
     if modCallbacks >= RunObjectivesAPI.modCallbacksOffset then
         for _, registerCallbackHandler in ipairs(registeredCallbacksHandlers) do
             if registerCallbackHandler.ID == modCallbacks then
-                registerCallbackHandler.AddCallback(functionCallback, ...)
+                registerCallbackHandler:AddCallback(functionCallback, ...)
             end
         end
     else

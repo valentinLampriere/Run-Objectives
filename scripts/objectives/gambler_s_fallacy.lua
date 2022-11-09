@@ -21,5 +21,9 @@ end
 
 RunObjectivesAPI:RegisterObjective(objective)
 
+function GambersFallacyObjective:OnMachineUpdate(machine)
+    print("Machine update :)")
+end
+
 -- Callbacks --
-RunObjectivesAPI:AddObjectiveCallback(objective, false, ModCallbacks.MC_POST_UPDATE, function() end)
+RunObjectivesAPI:AddObjectiveCallback(objective, false, RunObjectivesAPI.ModCallbacks.MACHINE_UPDATE, GambersFallacyObjective.OnMachineUpdate)
