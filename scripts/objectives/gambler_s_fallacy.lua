@@ -39,7 +39,6 @@ function GambersFallacyObjective:OnMachineUpdate(machine)
         local animation = sprite:GetAnimation()
         if animation == "Initiate" or animation == "CoinInsert" or animation == "PayPrize" or animation == "PayNothing" or animation == "PayShuffle" then
             local previousCoinAmount = mData.ro_gamblersFallacy_previousCoinAmount or 0
-            print("Pay " .. (previousCoinAmount - currentCountAmount))
             spentCoins = spentCoins + previousCoinAmount - currentCountAmount
         end
     end

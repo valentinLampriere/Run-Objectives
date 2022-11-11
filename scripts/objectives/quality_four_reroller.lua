@@ -41,7 +41,7 @@ local function GetCollectibleQuality(id)
 end
 
 function RerollQualityFourObjective:PreUseD6_uncomplete(collectibleType, rng, player, flags, slot)
-    local collectibles = Isaac.FindByType(5, 100, -1, false, false)
+    local collectibles = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, -1, false, false)
     for _, collectible in ipairs(collectibles) do
         local quality = GetCollectibleQuality(collectible.SubType)
         if quality == 4 then
