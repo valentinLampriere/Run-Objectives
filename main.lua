@@ -10,7 +10,7 @@ local RunObjectivesMod = RegisterMod("Run Objectives", 1)
 local Objective = include("scripts.objective")
 local ObjectivesRenderer = include("scripts.renderer.objectives_renderer")
 local ObjectiveCompletedRenderer = include("scripts.renderer.objective_completed_renderer")
-local CustomCallbacksHandlers = include("scripts.callbacks.custom_callbacks_handlers")
+include("scripts.libraries.cycling_items")
 
 
 -- Fields

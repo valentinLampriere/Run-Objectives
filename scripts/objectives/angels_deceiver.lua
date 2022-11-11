@@ -13,10 +13,9 @@ function AngelsDeceiverObjective:Evaluate()
 end
 
 function AngelsDeceiverObjective:OnCompleted()
-    --Game():GetLevel():AddAngelRoomChance(0.5)
 end
 
-function AngelsDeceiverObjective:OnNewRun(isCompleted)
+function AngelsDeceiverObjective:OnNewRun(IsContinued)
     killedAngelsCount = 0
 end
 

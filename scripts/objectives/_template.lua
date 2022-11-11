@@ -15,7 +15,7 @@ function NewObjective:OnCompleted()
     
 end
 
-function NewObjective:OnNewRun(isCompleted)
+function NewObjective:OnNewRun(IsContinued)
 
 end
 

@@ -14,7 +14,7 @@ function GetsThreeKnivesObjective:Evaluate()
     return knivesCount / game:GetNumPlayers() >= GetsThreeKnivesObjective.Stats.RequiredKnivesNum
 end
 
-function GetsThreeKnivesObjective:OnNewRun(isCompleted)
+function GetsThreeKnivesObjective:OnNewRun(IsContinued)
     knivesCount = 0
 
     local playerCount = game:GetNumPlayers()

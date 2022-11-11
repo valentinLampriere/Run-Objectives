@@ -24,7 +24,7 @@ function RerollQualityFourObjective:Evaluate()
     return hasRerolledQuality4
 end
 
-function RerollQualityFourObjective:OnNewRun(isCompleted)
+function RerollQualityFourObjective:OnNewRun(IsContinued)
     hasRerolledQuality4 = false
     d6frameUsed = 0
 end

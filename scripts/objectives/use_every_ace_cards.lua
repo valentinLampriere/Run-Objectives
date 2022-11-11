@@ -15,7 +15,7 @@ function UseEveryAceCardsObjective:Evaluate()
     return hasUsedAceOfSpades and hasUsedAceOfClubs and hasUsedAceOfDiamonds and hasUsedAceOfHearts
 end
 
-function UseEveryAceCardsObjective:OnNewRun(isCompleted)
+function UseEveryAceCardsObjective:OnNewRun(IsContinued)
     hasUsedAceOfSpades = false
     hasUsedAceOfClubs = false
     hasUsedAceOfDiamonds = false
