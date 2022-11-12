@@ -20,8 +20,6 @@ end
 function CallbackHandler:AddCallback(_function, ...)
     local args = {...}
 
-	print(_function)
-
 	if _function == nil then
 		return
 	end

@@ -88,8 +88,8 @@ RunObjectivesAPI.AddObjectiveCallback = RunObjectivesMod.AddObjectiveCallback
 RunObjectivesMod:RegisterCallbackHandler(include("scripts.callbacks.custom.post_machine_update_handler"))
 
 include("scripts.Objectives.quality_four_reroller")
-include("scripts.Objectives.gets_three_knives")
-include("scripts.Objectives.angels_deceiver")
-include("scripts.Objectives.use_every_ace_cards")
+--include("scripts.Objectives.gets_three_knives")
+--include("scripts.Objectives.angels_deceiver")
+include("scripts.Objectives.four_of_a_kind")
 include("scripts.Objectives.gambler_s_fallacy")
 include("scripts.Objectives.more_or_less")
