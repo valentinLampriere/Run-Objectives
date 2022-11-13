@@ -8,7 +8,6 @@ local objective = RunObjectivesAPI.Objective:new(AvoidedVoidObjective, "Avoided 
 
 local hasAbsorbVoid = false
 local hasAbsorbBlackRune = false
-local collectibleTracker = { }
 
 function AvoidedVoidObjective:Evaluate()
     return hasAbsorbVoid or hasAbsorbBlackRune
@@ -17,7 +16,6 @@ end
 function AvoidedVoidObjective:OnNewRun(IsContinued)
     hasAbsorbVoid = false
     hasAbsorbBlackRune = false
-    collectibleTracker = { }
 end
 
 RunObjectivesAPI:RegisterObjective(objective)
