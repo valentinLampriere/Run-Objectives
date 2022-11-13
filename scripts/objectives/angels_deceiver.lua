@@ -4,7 +4,7 @@ AngelsDeceiverObjective.Stats = {
     AngelsKillAmount = 4
 }
 
-local objective = RunObjectivesAPI.Objective:new(AngelsDeceiverObjective, "Angels Deceiver")
+local objective = RunObjectivesAPI.Objective:New(AngelsDeceiverObjective, "Angels Deceiver")
 
 local killedAngelsCount = 0
 
@@ -18,8 +18,6 @@ end
 function AngelsDeceiverObjective:OnNewRun(IsContinued)
     killedAngelsCount = 0
 end
-
-RunObjectivesAPI:RegisterObjective(objective)
 
 function AngelsDeceiverObjective:OnAngelKilled(entity)
     if entity.SubType ~= 0 then

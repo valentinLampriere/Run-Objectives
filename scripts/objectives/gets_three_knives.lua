@@ -4,7 +4,7 @@ GetsThreeKnivesObjective.Stats = {
     RequiredKnivesNum = 3
 }
 
-local getsThreeKnivesObjectiveObjective = RunObjectivesAPI.Objective:new(GetsThreeKnivesObjective, "Gets three knives")
+local getsThreeKnivesObjectiveObjective = RunObjectivesAPI.Objective:New(GetsThreeKnivesObjective, "Gets three knives")
 
 local game = Game()
 
@@ -23,8 +23,6 @@ function GetsThreeKnivesObjective:OnNewRun(IsContinued)
         GetsThreeKnivesObjective:OnPlayerInit(player)
     end
 end
-
-RunObjectivesAPI:RegisterObjective(getsThreeKnivesObjectiveObjective)
 
 local function EvaluateKnivesItemCount(pData, variableName, _knivesCount)
     if pData[variableName] == nil then

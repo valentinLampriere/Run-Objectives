@@ -5,7 +5,7 @@ local itemPool = Game():GetItemPool()
 local d6frameUsed = 0
 local hasRerolledQuality4 = false
 
-local quality4RerollerObjective = RunObjectivesAPI.Objective:new(RerollQualityFourObjective, "Quality 4 reroller")
+local quality4RerollerObjective = RunObjectivesAPI.Objective:New(RerollQualityFourObjective, "Quality 4 reroller")
 
 local game = Game()
 local rng
@@ -28,9 +28,6 @@ function RerollQualityFourObjective:OnNewRun(IsContinued)
     hasRerolledQuality4 = false
     d6frameUsed = 0
 end
-
-RunObjectivesAPI:RegisterObjective(quality4RerollerObjective)
-
 
 local function GetCollectibleQuality(id)
     local collectible = itemConfig:GetCollectible(id)

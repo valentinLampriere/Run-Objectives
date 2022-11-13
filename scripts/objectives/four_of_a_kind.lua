@@ -1,6 +1,6 @@
 local FourOfAKindObjective = { }
 
-local objective = RunObjectivesAPI.Objective:new(FourOfAKindObjective, "For of a Kind")
+local objective = RunObjectivesAPI.Objective:New(FourOfAKindObjective, "For of a Kind")
 
 local hasUsedAceOfSpades = false
 local hasUsedAceOfClubs = false
@@ -19,9 +19,6 @@ function FourOfAKindObjective:OnNewRun(IsContinued)
     hasUsedAceOfDiamonds = false
     hasUsedAceOfHearts = false
 end
-
-RunObjectivesAPI:RegisterObjective(objective)
-
 
 function FourOfAKindObjective:UseAceOfSpaces(card, player, useFlags)
     hasUsedAceOfSpades = true

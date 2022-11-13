@@ -7,7 +7,7 @@ GambersFallacyObjective.Stats = {
     DuplicateChestPickupChance = 100
 }
 
-local objective = RunObjectivesAPI.Objective:new(GambersFallacyObjective, "Gambler's Fallacy")
+local objective = RunObjectivesAPI.Objective:New(GambersFallacyObjective, "Gambler's Fallacy")
 
 local spentCoins = 0
 
@@ -26,8 +26,6 @@ end
 function GambersFallacyObjective:OnNewRun(IsContinued)
     spentCoins = 0
 end
-
-RunObjectivesAPI:RegisterObjective(objective)
 
 function GambersFallacyObjective:OnMachineUpdate(machine)
     local sprite = machine:GetSprite()

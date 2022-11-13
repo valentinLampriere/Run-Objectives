@@ -4,7 +4,7 @@ NewObjective.Stats = {
     
 }
 
-local objective = RunObjectivesAPI.Objective:new(NewObjective, "")
+local objective = RunObjectivesAPI.Objective:New(NewObjective, "")
 
 
 function NewObjective:Evaluate()
@@ -18,8 +18,6 @@ end
 function NewObjective:OnNewRun(IsContinued)
 
 end
-
-RunObjectivesAPI:RegisterObjective(objective)
 
 -- Callbacks --
 RunObjectivesAPI:AddObjectiveCallback(objective, false, ModCallbacks.MC_POST_UPDATE, function() end)

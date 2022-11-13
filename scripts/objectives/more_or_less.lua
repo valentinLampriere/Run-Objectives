@@ -6,7 +6,7 @@ local itemPool = game:GetItemPool()
 local hasSpindownSadOnion = false
 local hasSpindownSadOnionFrame = 0
 
-local objective = RunObjectivesAPI.Objective:new(MoreOrLessObjective, "More or Less")
+local objective = RunObjectivesAPI.Objective:New(MoreOrLessObjective, "More or Less")
 
 
 function MoreOrLessObjective:Evaluate()
@@ -17,8 +17,6 @@ function MoreOrLessObjective:OnNewRun(IsContinued)
     hasSpindownSadOnion = false
     hasSpindownSadOnionFrame = 0
 end
-
-RunObjectivesAPI:RegisterObjective(objective)
 
 local function GetPoolType(seed)
     local roomType = game:GetRoom():GetType()

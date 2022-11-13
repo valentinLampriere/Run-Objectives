@@ -4,7 +4,7 @@ AvoidedVoidObjective.Stats = {
     ChancesToStatsUp = 33
 }
 
-local objective = RunObjectivesAPI.Objective:new(AvoidedVoidObjective, "Avoided Void")
+local objective = RunObjectivesAPI.Objective:New(AvoidedVoidObjective, "Avoided Void")
 
 local hasAbsorbVoid = false
 local hasAbsorbBlackRune = false
@@ -17,8 +17,6 @@ function AvoidedVoidObjective:OnNewRun(IsContinued)
     hasAbsorbVoid = false
     hasAbsorbBlackRune = false
 end
-
-RunObjectivesAPI:RegisterObjective(objective)
 
 function AvoidedVoidObjective:OnPreUseVoid(collectible, rng, player, useFlags, slot)
     local voids = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CollectibleType.COLLECTIBLE_VOID)

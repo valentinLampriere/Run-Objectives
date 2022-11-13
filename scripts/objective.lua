@@ -5,7 +5,7 @@ local Objective = {
     sprite = nil
 }
 
-function Objective:new(o, name)
+function Objective:New(o, name)
     o = o or { }
     setmetatable(o, self)
     self.__index = self
@@ -19,7 +19,13 @@ function Objective:new(o, name)
     sprite:ReplaceSpritesheet(0, o.gfx)
     o.sprite = sprite
 
+    RunObjectivesAPI:RegisterObjective(o)
+
     return o
+end
+
+function Objective:Evaluate()
+    return false
 end
 
 function Objective:OnCompleted()

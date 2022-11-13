@@ -19,10 +19,6 @@ local registeredCallbacksHandlers = { }
 
 -- Functions
 function RunObjectivesMod:RegisterObjective(objective)
-    if objective.Evaluate == nil then
-        error("Objective \"".. objective.name .."\" requires an \"Evaluate\" function!")
-    end
-
     table.insert(registeredObjectives, objective)
 end
 
