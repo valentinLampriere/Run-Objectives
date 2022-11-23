@@ -1,47 +1,76 @@
 local InvincibleObjective = { }
 
 InvincibleObjective.Stats = {
-    RequiredDeath = 2
+    RequiredDeath = 1
 }
 
 local objective = RunObjectivesAPI.Objective:New(InvincibleObjective, "Invincible!")
 
 local extraLivesLost = 0
-local enemiesWhoKilledPlayers = { }
+local enemiesToErase = { }
+
+local function SpawnFakeNPC(position, type, variant, subtype)
+    local fakeEnemy = Isaac.Spawn(type, variant, subtype, position, Vector.Zero, nil):ToNPC()
+    fakeEnemy:AddEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS | EntityFlag.FLAG_NO_BLOOD_SPLASH | EntityFlag.FLAG_NO_FLASH_ON_DAMAGE | EntityFlag.FLAG_NO_KNOCKBACK | EntityFlag.FLAG_NO_PHYSICS_KNOCKBACK | EntityFlag.FLAG_DONT_COUNT_BOSS_HP | EntityFlag.FLAG_HIDE_HP_BAR | EntityFlag.FLAG_NO_REWARD | EntityFlag.FLAG_NO_PLAYER_CONTROL | EntityFlag.FLAG_NO_QUERY)
+
+    fakeEnemy:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+    
+    fakeEnemy.HitPoints = 1
+    fakeEnemy.CanShutDoors = false
+    fakeEnemy.Visible = false
+
+    return fakeEnemy
+end
+
+local function SpawnFakeEraser(position)
+    local fakeEraser = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.ERASER, 0, position, Vector.Zero, nil):ToTear()
+    fakeEraser:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+    fakeEraser.Visible = false
+
+    return fakeEraser
+end
 
 local function EraseEnemy(type, variant, subtype)
-    local freePosition = Game():GetRoom():FindFreeTilePosition(Vector.Zero, 0)
-    local fakeEnemy = Isaac.Spawn(type, variant, subtype, freePosition, Vector.Zero, nil):ToNPC()
-    fakeEnemy.HitPoints = 1
-    local fakeEraser = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.ERASER, 0, freePosition, Vector.Zero, nil):ToTear()
-    fakeEnemy.Visible = false
-    fakeEraser.Visible = false
+    local room = Game():GetRoom()
+    local centerPosition = room:GetCenterPos()
+    local freePosition = room:FindFreeTilePosition(centerPosition, 0)
+    local fakeEnemy = SpawnFakeNPC(freePosition, type, variant, subtype or 0)
+    local fakeEraser = SpawnFakeEraser(freePosition)
 end
 
 function InvincibleObjective:Evaluate()
-    print(extraLivesLost .." >= " .. InvincibleObjective.Stats.RequiredDeath)
     return extraLivesLost >= InvincibleObjective.Stats.RequiredDeath
 end
 
 function InvincibleObjective:OnNewRun(IsContinued)
     extraLivesLost = 0
-    enemiesWhoKilledPlayers = { }
+    enemiesToErase = { }
 end
 
 function InvincibleObjective:OnCompleted()
-    for _, enemyData in ipairs(enemiesWhoKilledPlayers) do
+    for _, enemyData in ipairs(enemiesToErase) do
         EraseEnemy(enemyData[1], enemyData[2], enemyData[3])
     end
+
+    enemiesToErase = { }
 end
 
 function InvincibleObjective:OnPlayerTakeDamage(player, amount, damageFlags, source, countdown)
     local pData = player:GetData()
+    pData.ro_invincible_lastPlayerDamageSource = nil
     if source and source.Entity then
-        if source.Entity:IsVulnerableEnemy() then
-            pData.ro_invincible_lastPlayerDamageSource = { source.Entity.Type, source.Entity.Variant, source.Entity.SubType }
+        if source.Entity.Type == EntityType.ENTITY_PROJECTILE then
+            pData.ro_invincible_lastPlayerDamageSource = { source.Entity.SpawnerType, source.Entity.SpawnerVariant }
+        elseif source.Entity:IsVulnerableEnemy() then
+            pData.ro_invincible_lastPlayerDamageSource = { source.Entity.Type, source.Entity.Variant }
         end
-    else
-        pData.ro_invincible_lastPlayerDamageSource = nil
+    end
+end
+
+local function OnPlayerDied(player)
+    local pData = player:GetData()
+    if pData.ro_invincible_lastPlayerDamageSource.Type ~= EntityType.ENTITY_PLAYER then
+        table.insert(enemiesToErase, pData.ro_invincible_lastPlayerDamageSource)
     end
 end
 
@@ -56,9 +85,7 @@ function InvincibleObjective:OnPlayerUpdate(player)
     if extraLives < pData.ro_invincible_extraLives then
         extraLivesLost = extraLivesLost + pData.ro_invincible_extraLives - extraLives
         if pData.ro_invincible_lastPlayerDamageSource ~= nil then
-            if pData.ro_invincible_lastPlayerDamageSource.Type ~= EntityType.ENTITY_PLAYER then
-                table.insert(enemiesWhoKilledPlayers, pData.ro_invincible_lastPlayerDamageSource)
-            end
+            OnPlayerDied(player)
         end
     end
 
