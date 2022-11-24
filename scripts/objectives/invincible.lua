@@ -1,7 +1,9 @@
+local IsFinalBoss = require("scripts.helpers.is_final_boss")
+
 local InvincibleObjective = { }
 
 InvincibleObjective.Stats = {
-    RequiredDeath = 1
+    RequiredDeath = 10
 }
 
 local objective = RunObjectivesAPI.Objective:New(InvincibleObjective, "Invincible!")
@@ -59,10 +61,15 @@ function InvincibleObjective:OnPlayerTakeDamage(player, amount, damageFlags, sou
     local pData = player:GetData()
     pData.ro_invincible_lastPlayerDamageSource = nil
     if source and source.Entity then
+        local sourceNPC
         if source.Entity.Type == EntityType.ENTITY_PROJECTILE then
-            pData.ro_invincible_lastPlayerDamageSource = { source.Entity.SpawnerType, source.Entity.SpawnerVariant }
-        elseif source.Entity:IsVulnerableEnemy() then
-            pData.ro_invincible_lastPlayerDamageSource = { source.Entity.Type, source.Entity.Variant }
+            sourceNPC = source.Entity.SpawnerEntity
+        elseif source.Entity:IsVulnerableEnemy() and IsFinalBoss(source.Entity) == false then
+            sourceNPC = source.Entity
+        end
+
+        if sourceNPC ~= nil then
+            pData.ro_invincible_lastPlayerDamageSource = { sourceNPC.Type, sourceNPC.Variant }
         end
     end
 end
